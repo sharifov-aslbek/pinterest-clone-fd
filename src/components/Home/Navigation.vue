@@ -1,5 +1,5 @@
 <template>
-    <nav class="sidebar">
+    <nav v-if="isTokenAvailable" class="sidebar">
       <!-- Pinterest Logo -->
       <div class="logo">
         <!-- <LogoIcon /> -->
@@ -52,7 +52,14 @@
 
     // QuestionMark as QuestionMarkIcon,
   } from 'lucide-vue-next'
+  import { ref , onMounted } from 'vue';
   
+const isTokenAvailable = ref(false);
+
+onMounted(() => {
+  isTokenAvailable.value = !!localStorage.getItem("tokenPinterest");
+});
+
   </script>
   
   <style scoped>

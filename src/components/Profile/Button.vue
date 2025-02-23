@@ -1,15 +1,20 @@
 <template>
-  <n-dropdown :options="options" @select="handleSelect">
+  <n-dropdown v-if="isTokenAvailable" :options="options" @select="handleSelect">
     <n-button>Profile</n-button>
   </n-dropdown>
 </template>
 
 <script setup>
-import { h } from "vue";
+import { h , ref , onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { NIcon, NButton, NDropdown } from "naive-ui";
 import { useAuthStore } from '@/stores/auth';
 
+const isTokenAvailable = ref(false);
+
+onMounted(() => {
+  isTokenAvailable.value = !!localStorage.getItem("tokenPinterest");
+});
 const store = useAuthStore();
 const router = useRouter();
 

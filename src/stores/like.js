@@ -26,7 +26,7 @@ export const useLikeStore = defineStore('like', () => {
     );
 
     console.log('Like response' , response.data);
-    
+    window.location.reload();
     
 
     } catch (err) {

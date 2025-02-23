@@ -9,6 +9,7 @@ export const useAuthStore = defineStore('auth', () => {
   const profileData = ref(null);
   const userData = ref(null);
   const token = ref(null);
+  const notconfirmed = ref(false);
 
   async function handleUpload(filelist) {
     try {
@@ -61,10 +62,15 @@ export const useAuthStore = defineStore('auth', () => {
       const response = await axios.post('http://127.0.0.1:8000/api/login', formData)
 
       token.value = response.data.data.token
-      localStorage.setItem('tokenPinterest' , token.value)
-  
+      
+      if(response.data.message == "Tasdiqlanmadi") {
+        notconfirmed.value = true;
+      } else { 
+        localStorage.setItem('tokenPinterest' , token.value)
+        router.push('/')
+      }
+
       console.log('login response', response.data.data.token)
-      router.push('/')
       // if (response.status === 200) {
       //   await loginToRegister(email, password)
       // }
@@ -232,5 +238,5 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
 
-  return {register , handleUpload , loginHandler , getProfileData , profileData , getUserData , userData , getProfileData , updateProfile , logout , changepassword }
+  return {register , handleUpload , loginHandler , getProfileData , profileData , getUserData , userData , getProfileData , updateProfile , logout , changepassword , notconfirmed }
 })

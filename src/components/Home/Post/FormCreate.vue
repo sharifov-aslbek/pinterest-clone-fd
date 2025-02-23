@@ -5,14 +5,12 @@ import {
   NFormItem, 
   NInput, 
   NUpload, 
-  NButton, 
-  useMessage 
+  NButton,  
 } from 'naive-ui'
 
 import { usePostStore } from '@/stores/post'
 
 const formRef = ref(null)
-const message = useMessage()
 const store = usePostStore();
 const selectedFile = ref(null);
 const formData = ref({
@@ -38,14 +36,6 @@ const handleFileUpload = (event) => {
   // store.file.value = event.target.files[0];
 };
 
-const rules = {
-  title: [
-    { required: true, message: 'Please enter a title', trigger: 'blur' }
-  ],
-  description: [
-    { required: true, message: 'Please enter a description', trigger: 'blur' }
-  ]
-}
 
 const handleSubmit = (e) => {
   e.preventDefault()

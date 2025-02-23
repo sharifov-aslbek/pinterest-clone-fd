@@ -31,6 +31,7 @@ const password = ref(null);
                 <br>
                 <a href="">Forgot password ?</a>
                 <br>
+                <h3 v-if="authStore.notconfirmed" style="color: red; font-size: 12px;">Tasdiqlanmadi parol yoki login xato bo'lishi mumkin</h3>
                 <button type="submit">
                     Login
                 </button>

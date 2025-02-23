@@ -14,10 +14,22 @@
                 </div>
             </div>
         </div>
+
+        <div v-else class="not-found">
+            <img style="width: 200px;" src="https://s.pinimg.com/webapp/boards-cf40ced5.svg" alt="Not Found">
+
+            <h3>Post not found</h3>
+            <p>Доски помогают упорядочивать сохраненные пины в коллекции</p>
+
+            <NButton @click="navigatePost" type="error">
+                Create Post
+            </NButton>
+        </div>
     </div>
 </template>
 
 <script setup>
+import { NButton } from 'naive-ui';
 import { usePostStore } from '@/stores/post';
 import { onMounted , ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -74,5 +86,14 @@ button {
 .text {
     display: flex;
     justify-content: space-between;
+}
+
+
+.not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    
 }
 </style>

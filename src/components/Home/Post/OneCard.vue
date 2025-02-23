@@ -6,7 +6,7 @@
             </div>
 
             <div class="right">
-                <div @click="likeStore.addLike(store.onePost.id)" class="like">
+                <div @click="addLikes(store.onePost.id)" class="like">
                     <Heart />
                     <p>{{ store.onePost.like_count }}</p>
                 </div>
@@ -26,16 +26,26 @@
 import { Heart } from 'lucide-vue-next';
 import { onMounted , ref , watch } from 'vue';
 import { usePostStore } from '@/stores/post';
+import { useNotification } from 'naive-ui';
 import { useAuthStore } from '@/stores/auth';
 import { useLikeStore } from '@/stores/like';
 import { useRoute } from 'vue-router';
 const store = usePostStore();
 const authStore = useAuthStore();
 const likeStore = useLikeStore();
+const notification = useNotification();
 const route = useRoute();
 onMounted(() => {
     store.getOnePosts(route.params.id)
 })
+
+const addLikes = (id) => {
+    likeStore.addLike(id)
+    notification.success({
+    content: "Like added",
+    duration: 2500, // 2.5 sekund davomida ko'rinadi
+  });
+}
 
 watch(
   () => store.onePost, 
