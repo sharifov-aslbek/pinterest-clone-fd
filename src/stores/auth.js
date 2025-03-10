@@ -65,7 +65,7 @@ export const useAuthStore = defineStore('auth', () => {
       
       if(response.data.message == "Tasdiqlanmadi") {
         notconfirmed.value = true;
-      } else { 
+      } else if(response.data.message == "Oke") { 
         localStorage.setItem('tokenPinterest' , token.value)
         router.push('/')
       }
