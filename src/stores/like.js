@@ -7,6 +7,7 @@ export const useLikeStore = defineStore('like', () => {
   const file = ref(null);
   const postsData = ref(null);
   const onePost = ref(null);
+  const likedPosts = ref(null);
   const token = ref(null);
 
 
@@ -53,5 +54,24 @@ export const useLikeStore = defineStore('like', () => {
     }
   }
 
-  return {postsData , getOnePosts , onePost , addLike}
+  async function getUserLikedPost(id) {
+    try {
+    const token = localStorage.getItem('tokenPinterest')
+      const response = await axios.get(`http://127.0.0.1:8000/api/getUserLikedPosts`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      likedPosts.value = response.data.data;
+      console.log('one posts', response.data)
+      // if (response.status === 200) {
+      //   await loginToRegister(email, password)
+      // }
+    } catch (err) {
+      console.error('API Error:', err)
+    }
+  }
+
+  return {postsData , getOnePosts , onePost , addLike , likedPosts , getUserLikedPost}
 })

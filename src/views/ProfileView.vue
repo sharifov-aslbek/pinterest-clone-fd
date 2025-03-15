@@ -15,8 +15,8 @@
 
 <script setup>
 import { onMounted , ref } from 'vue';
-import { useAuthStore } from '@/stores/auth';
 import Posts from '@/components/Profile/Posts.vue';
+import { useAuthStore } from '@/stores/auth';
 
 const store = useAuthStore();
 onMounted(() => {

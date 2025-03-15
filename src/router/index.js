@@ -48,6 +48,11 @@ const router = createRouter({
       component: ChangePassword,
     },
     {
+      path: '/likedposts',
+      name: 'likedposts',
+      component: import('../components/Like/UserLikedPosts.vue')
+    },
+    {
       path: '/post/create',
       name: 'postcreate',
       component: FormCreate ,

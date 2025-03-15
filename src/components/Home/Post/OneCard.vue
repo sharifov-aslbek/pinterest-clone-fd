@@ -7,7 +7,13 @@
 
             <div class="right">
                 <div @click="addLikes(store.onePost.data.id)" class="like">
-                    <Heart />
+                    <Heart 
+    :color="checkLikeLet ? 'red' : 'black'" 
+    :size="24" 
+    :stroke-width="2" 
+    :fill="checkLikeLet ? 'red' : 'none'" 
+    class="cursor-pointer" 
+  />
                     <p>{{ store.onePost.data.like_count }}</p>
                 </div>
 
@@ -88,6 +94,7 @@
 </template>
 
 <script setup>
+import axios from 'axios';
 import { NInput , NButton } from 'naive-ui';
 import { Heart , ArrowBigRight , ArrowBigLeft , X } from 'lucide-vue-next';
 import { onMounted , ref , watch } from 'vue';
@@ -109,6 +116,7 @@ const userId = ref(null);
 const userName = ref(null);
 const route = useRoute();
 const replyShow = ref(false);
+const checkLikeLet = ref(false);
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
@@ -116,8 +124,30 @@ const navigateCard = (id) => {
     router.push(`/card/${id}`)
 }
 
+const checkLike = async (id) => {
+  try {
+    const token = localStorage.getItem('tokenPinterest')
+
+    const response = await axios.get(`http://127.0.0.1:8000/api/checklike/${store.onePost.data.id}/${authStore.userData.id}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    )
+
+    console.log('Like response', response.data)
+    checkLikeLet.value = response.data.data
+    // Sahifani yangilash o'rniga reaktiv holatni o'zgartirish tavsiya etiladi
+    // window.location.reload(); <-- buni iloji boricha ishlatmang
+
+  } catch (err) {
+    console.error('API Error:', err)
+  }
+}
+
 onMounted(() => {
     store.getOnePosts(route.params.id)
+
+    authStore.getProfileData().then(() => {
+    checkLike() // Profil yuklangandan keyin ishlaydi
+  })
 })
 
 watch(() => route.params.id, (newId) => {

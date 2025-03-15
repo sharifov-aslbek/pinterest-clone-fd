@@ -20,23 +20,13 @@
         </RouterLink>
   
         <div class="notification-wrapper">
-          <button class="nav-button">
-            <BellIcon />
-            <span class="notification-badge">99+</span>
-          </button>
+          <RouterLink to="/likedposts" class="nav-button">
+            <HeartIcon />
+            <span v-if="store.likedPosts" class="notification-badge">{{ store.likedPosts.length }}</span>
+          </RouterLink>
         </div>
   
-        <button class="nav-button">
-          <MessageCircleIcon />
-        </button>
-  
-        <button class="nav-button">
-          <CameraIcon />
-        </button>
-  
-        <button class="nav-button">
-          <CameraIcon />
-        </button>
+       
       </div>
     </nav>
   </template>
@@ -46,6 +36,7 @@
     Home as HomeIcon,
     Search as SearchIcon,
     Bell as BellIcon,
+    Heart as HeartIcon,
     MessageCircle as MessageCircleIcon,
     Camera as CameraIcon,
     BadgePlus as BadgePlusIcon,
@@ -53,11 +44,14 @@
     // QuestionMark as QuestionMarkIcon,
   } from 'lucide-vue-next'
   import { ref , onMounted } from 'vue';
+  import { useLikeStore } from '@/stores/like';
   
+  const store = useLikeStore();
 const isTokenAvailable = ref(false);
 
 onMounted(() => {
   isTokenAvailable.value = !!localStorage.getItem("tokenPinterest");
+  store.getUserLikedPost();
 });
 
   </script>
@@ -126,7 +120,7 @@ onMounted(() => {
   .notification-badge {
     position: absolute;
     top: 4px;
-    right: 4px;
+    right: -9px;
     background-color: #E60023;
     color: white;
     font-size: 12px;
