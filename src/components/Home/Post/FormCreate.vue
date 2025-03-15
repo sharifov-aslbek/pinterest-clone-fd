@@ -9,6 +9,7 @@ import {
   NTreeSelect
 } from 'naive-ui'
 
+import { useRouter } from 'vue-router'
 import { usePostStore } from '@/stores/post'
 import { useCategoryStore } from '@/stores/category'
 const formRef = ref(null)
@@ -16,6 +17,7 @@ const store = usePostStore();
 const categoryStore = useCategoryStore();
 const value = ref([]);
 const selectedValues = [...value.value];
+const router = useRouter();
 const options = computed(() => [
   // Avvalgi options massivini qo'shamiz
   ...[
@@ -83,7 +85,7 @@ const createPost = async () => {
   } catch (err) {
     console.error('API Error:', err);
   } finally {
-    file.value = null;
+    console.log('final')
   }
 };
 </script>
